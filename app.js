@@ -1,20 +1,28 @@
-var app = require ('express')();
+
+// require your dependencies
+// your App is ABSOLUTELY DEPENDANT ON YOUR DEPENDENCIES
+var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// Make an HTTP Request
+// Hyper Text Transfer Protocol
+// respond by sending a file (e.i html)
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function (socket) {
-    console.log('user connected');
+// listen to events using Socket.io
+// handle events with callback functions
+io.on('connection', function(socket){
+    console.log( 'a user connected' );
 
-    io.on('chat message', function (msg) {
-        io.emit('chat message',msg);
-        console.log('chat message', msg);
-    })
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+    });
 });
 
-app.listen(3000,function(){
-    console.log('App listening on port 3000: go to"http://localhost:3000" ')
+// Your App is listening on port 3000
+http.listen(3000, function(){
+    console.log( 'listen on: localhost:3000' );
 });
