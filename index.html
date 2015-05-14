@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Real Time Random Chat Application</h1>
+
+<ul id="messages">
+
+    <form action="">
+        <input autocomplete="off" id="m"/>
+        <button> SEND </button>
+    </form>
+</ul>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="/socket.io/socket.io.js" ></script>
+<script>
+    var socket = io();
+    $('form').submit(function(parameters){
+        socket.emit('chat message', $('#m').val() );
+        $('#m').val('');
+        return false;
+    })
+</script>
+
+</body>
+</html>
