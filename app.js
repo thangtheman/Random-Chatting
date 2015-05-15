@@ -4,6 +4,10 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
+var express = require('express');
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Make an HTTP Request
 // Hyper Text Transfer Protocol
