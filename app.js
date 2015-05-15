@@ -1,32 +1,26 @@
+// This is the main file of our chat app. It initializes a new 
+// express.js instance, requires the config and routes files
+// and listens on a port. Start the application by running
+// 'node app.js' in your terminal
 
-// require your dependencies
-// your App is ABSOLUTELY DEPENDANT ON YOUR DEPENDENCIES
-var app = require('express')();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
-var express = require('express');
-app.use(express.static(path.join(__dirname, 'public')));
+var express = require('express'),
+	app = express();
+
+// This is needed if the app is run on heroku:
+
+var port = process.env.PORT || 8080;
+
+// Initialize a new socket.io object. It is bound to 
+// the express app, which allows them to coexist.
+
+var io = require('socket.io').listen(app.listen(port));
+
+// Require the configuration and the routes files, and pass
+// the app and io as arguments to the returned functions.
+
+require('./config')(app, io);
+require('./routes')(app, io);
 
 
-// Make an HTTP Request
-// Hyper Text Transfer Protocol
-// respond by sending a file (e.i html)
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-// listen to events using Socket.io
-// handle events with callback functions
-io.on('connection', function(socket){
-    console.log( 'a user connected' );
-
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-    });
-});
-
-// Your App is listening on port 3000
-http.listen(3000, function(){
-    console.log( 'listen on: localhost:3000' );
-});
+console.log('Your application is running on http://localhost:' + port);
