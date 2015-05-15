@@ -28,7 +28,7 @@ module.exports = function(app,io){
 
 	app.get('/chat/:id', function(req,res){
 
-		// Render the chant.html view
+		// Render the chat.html view
 		res.render('chat');
 	});
 
