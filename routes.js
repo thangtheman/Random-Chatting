@@ -66,7 +66,7 @@ module.exports = function(app,io){
 
 			var room = findClientsSocket(io, data.id);
 			// Only two people per room are allowed
-			if (room.length < 10) {
+			if (room.length < 2) {
 
 				// Use the socket object to store data. Each client gets
 				// their own unique socket object
